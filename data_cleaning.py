@@ -1,6 +1,6 @@
 import pandas as pd
 from data_cleaning_helpers import (getMinSalary, getMaxSalary, 
-DoesContractTypeExists, isTechnologyRequired,sumLevelsOfSkills)
+DoesContractTypeExists, isTechnologyRequired,sumLevelsOfSkills, fixCompanySize)
 
 df = pd.read_csv('frontend_raw_data.csv')
 df.drop('Unnamed: 0', axis=1, inplace = True)
@@ -19,6 +19,7 @@ df.drop('Unnamed: 0', axis=1, inplace = True)
 
 df['employment_types'] = df['employment_types'].apply(lambda x: x.replace("'", '"'))
 df['skills'] = df['skills'].apply(lambda x: x.replace("'", '"'))
+df['company_size'] = df['company_size'].apply(fixCompanySize)
 
 #add, maybe useful, columns into df
 
@@ -32,5 +33,5 @@ df['angular'] = df.apply(lambda x: isTechnologyRequired(x['title'], x['skills'],
 df['vue'] = df.apply(lambda x: isTechnologyRequired(x['title'], x['skills'], 'vue'), axis=1)
 df['sum_of_skill_levels'] = df['skills'].apply(sumLevelsOfSkills)
 
-df.to_csv('cleaned_frontend_data.csv')
+df.to_csv('cleaned_frontend_data.csv', index=False)
 

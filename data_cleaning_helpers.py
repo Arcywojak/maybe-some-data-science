@@ -1,5 +1,6 @@
 import json
 import math
+import re
 
 def convertToJson(employmentTypeSeries):
     try:
@@ -62,7 +63,14 @@ def sumLevelsOfSkills(skills):
     return sum
         
         
-        
+def fixCompanySize(compSize):
+    #is compSize separated by thea dash
+    sizeInRange = compSize.split('-')
+    if len(sizeInRange) == 2:
+        return math.floor((int(sizeInRange[0]) + int(sizeInRange[0])) / 2) 
+    
+    return int(re.sub(r'[^\d]', '', compSize))
+    
         
         
         
